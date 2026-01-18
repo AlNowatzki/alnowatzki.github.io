@@ -26,9 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 
 // API Configuration - Backend proxy endpoint
-// For local development: http://localhost:5001/api/chat
-// For production: Update to your deployed server URL
-const API_ENDPOINT = 'http://localhost:5001/api/chat';
+// Auto-detect environment: use production URL on GitHub Pages, localhost for development
+const API_ENDPOINT = window.location.hostname === 'alnowatzki.github.io'
+    ? 'https://trustybot-api.onrender.com/api/chat'
+    : 'http://localhost:5001/api/chat';
 
 // Session state
 let isTyping = false;

@@ -14,7 +14,14 @@ import os
 load_dotenv()
 
 app = Flask(__name__)
-CORS(app)  # Enable CORS for frontend requests
+
+# Configure CORS - allow requests from GitHub Pages and localhost for development
+CORS(app, origins=[
+    'https://alnowatzki.github.io',
+    'http://localhost:*',
+    'http://127.0.0.1:*',
+    'file://*'
+])
 
 # API Configuration - Loaded from .env file
 CLAUDE_API_KEY = os.environ.get('CLAUDE_API_KEY')
@@ -118,12 +125,19 @@ def health():
     return jsonify({'status': 'ok', 'service': 'TrustyBot API'})
 
 
+@app.route('/', methods=['GET'])
+def root():
+    """Root endpoint for Render health checks."""
+    return jsonify({'status': 'ok', 'service': 'TrustyBot API', 'endpoints': ['/api/chat', '/api/health']})
+
+
 if __name__ == '__main__':
+    port = int(os.environ.get('PORT', 5001))
     print("=" * 50)
     print("TrustyBot Backend Server")
     print("=" * 50)
-    print("Starting server on http://localhost:5001")
-    print("API endpoint: http://localhost:5001/api/chat")
-    print("Health check: http://localhost:5001/api/health")
+    print(f"Starting server on http://localhost:{port}")
+    print(f"API endpoint: http://localhost:{port}/api/chat")
+    print(f"Health check: http://localhost:{port}/api/health")
     print("=" * 50)
-    app.run(host='0.0.0.0', port=5001, debug=True)
+    app.run(host='0.0.0.0', port=port, debug=os.environ.get('FLASK_DEBUG', 'false').lower() == 'true')
