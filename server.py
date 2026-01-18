@@ -15,15 +15,8 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Configure CORS - allow requests from production domains and localhost for development
-CORS(app, origins=[
-    'https://alnowatzki.github.io',
-    'https://alnowatzki.com',
-    'https://www.alnowatzki.com',
-    'http://localhost:*',
-    'http://127.0.0.1:*',
-    'file://*'
-])
+# Configure CORS - allow requests from all origins (API is rate-limited and requires key anyway)
+CORS(app, resources={r"/api/*": {"origins": "*"}})
 
 # API Configuration - Loaded from .env file
 CLAUDE_API_KEY = os.environ.get('CLAUDE_API_KEY')

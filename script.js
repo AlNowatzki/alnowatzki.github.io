@@ -164,6 +164,8 @@ async function callClaudeAPI(userMessage) {
     }
 }
 
+let typingTimers = [];
+
 function showTypingIndicator(container) {
     isTyping = true;
     const indicator = document.createElement('div');
@@ -177,10 +179,28 @@ function showTypingIndicator(container) {
     `;
     container.appendChild(indicator);
     scrollToBottom(container);
+
+    // Update typing message after delays
+    const typingText = indicator.querySelector('.typing-text');
+
+    typingTimers.push(setTimeout(() => {
+        if (typingText && document.getElementById('typingIndicator')) {
+            typingText.textContent = 'TrustyBot is STILL typing...';
+        }
+    }, 3000));
+
+    typingTimers.push(setTimeout(() => {
+        if (typingText && document.getElementById('typingIndicator')) {
+            typingText.textContent = "OK. Real talk? We can't guarantee that TrustyBot is actually typing. Dude never learned home row, maybe? Anyway ... just wait a bit longer. It'll pay off. Maybe...";
+        }
+    }, 8000));
 }
 
 function hideTypingIndicator(container) {
     isTyping = false;
+    // Clear any pending typing message updates
+    typingTimers.forEach(timer => clearTimeout(timer));
+    typingTimers = [];
     const indicator = document.getElementById('typingIndicator');
     if (indicator) {
         indicator.remove();
@@ -272,10 +292,10 @@ function handleAPIError(container, error) {
     } else if (error.message === 'SERVER_OFFLINE') {
         errorMessage = `
             <strong>Server Offline</strong><br><br>
-            TrustyBot's backend server isn't running right now. Even unsafe AI needs infrastructure!
-            Please try again later, or
+            TrustyBot's backend server isn't running right now. Which means the frontend isn't working either. The middle-end though? Maybe. We're not sure. But look folks, this proves what we're always saying: Undependable A.I. needs dependable infrastructure! Otherwise what are we even doing here?!<br><br>
+            Whatever. Try again later, or
             <a href="mailto:al@alnowatzki.com" style="color: var(--color-accent-light);">contact Al</a>
-            to let him know.
+            to let him know his little robot is broken.
         `;
     } else {
         errorMessage = `
