@@ -15,9 +15,11 @@ load_dotenv()
 
 app = Flask(__name__)
 
-# Configure CORS - allow requests from GitHub Pages and localhost for development
+# Configure CORS - allow requests from production domains and localhost for development
 CORS(app, origins=[
     'https://alnowatzki.github.io',
+    'https://alnowatzki.com',
+    'https://www.alnowatzki.com',
     'http://localhost:*',
     'http://127.0.0.1:*',
     'file://*'

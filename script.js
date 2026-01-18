@@ -26,8 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 
 // API Configuration - Backend proxy endpoint
-// Auto-detect environment: use production URL on GitHub Pages, localhost for development
-const API_ENDPOINT = window.location.hostname === 'alnowatzki.github.io'
+// Auto-detect environment: use production URL on live site, localhost for development
+const isProduction = ['alnowatzki.github.io', 'alnowatzki.com', 'www.alnowatzki.com'].includes(window.location.hostname);
+const API_ENDPOINT = isProduction
     ? 'https://trustybot-api.onrender.com/api/chat'
     : 'http://localhost:5001/api/chat';
 
