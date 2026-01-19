@@ -191,7 +191,7 @@ function showTypingIndicator(container) {
 
     typingTimers.push(setTimeout(() => {
         if (typingText && document.getElementById('typingIndicator')) {
-            typingText.textContent = "OK. Real talk? We can't guarantee that TrustyBot is actually typing. Dude never learned home row, maybe? Anyway ... just wait a bit longer. Like 30 more seconds, max. It'll pay off. Maybe...";
+            typingText.textContent = "OK. Real talk? We can't guarantee that TrustyBot is actually typing. Dude never learned home row, maybe? Anyway ... just wait a bit longer. Like 40 more seconds, max. It'll pay off. Maybe...";
         }
     }, 8000));
 }
