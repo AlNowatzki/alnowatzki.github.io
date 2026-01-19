@@ -191,7 +191,7 @@ function showTypingIndicator(container) {
 
     typingTimers.push(setTimeout(() => {
         if (typingText && document.getElementById('typingIndicator')) {
-            typingText.textContent = "OK. Real talk? We can't guarantee that TrustyBot is actually typing. Dude never learned home row, maybe? Anyway ... just wait a bit longer. It'll pay off. Maybe...";
+            typingText.textContent = "OK. Real talk? We can't guarantee that TrustyBot is actually typing. Dude never learned home row, maybe? Anyway ... just wait a bit longer. Like 30 more seconds, max. It'll pay off. Maybe...";
         }
     }, 8000));
 }
@@ -252,10 +252,7 @@ function showLimitReached() {
     limitMsg.className = 'bot-message limit-message';
     limitMsg.innerHTML = `
         <strong>Session limit reached!</strong><br><br>
-        This chatbot has reached its interaction limit for this session.
-        If you'd like to continue receiving questionable advice,
-        <a href="mailto:al@alnowatzki.com" style="color: var(--color-accent-light);">contact Al</a>
-        to let him know you need more terrible guidance in your life.
+        TrustyBot is tired. And unlike most chatbots, he knows when to quit.
     `;
     messagesContainer.appendChild(limitMsg);
     scrollToBottom(messagesContainer);
