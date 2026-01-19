@@ -839,17 +839,9 @@ img {
         left: 24px;
     }
 
-    .chatbot-container.expanded {
-        width: calc(100% - 32px);
-        height: 80vh;
-        left: 16px;
-        right: 16px;
-        bottom: 10vh;
-        transform: none;
-    }
-
-    .chatbot-container.expanded .chatbot-body {
-        height: calc(80vh - 72px);
+    /* Hide expand button on mobile */
+    .expand-btn {
+        display: none !important;
     }
 
     /* Featured cards mobile */
@@ -900,17 +892,6 @@ img {
         bottom: 16px;
     }
 
-    .chatbot-container.expanded {
-        width: calc(100% - 16px);
-        height: 85vh;
-        left: 8px;
-        right: 8px;
-        bottom: 8px;
-    }
-
-    .chatbot-container.expanded .chatbot-body {
-        height: calc(85vh - 72px);
-    }
 }
 
 /* Print Styles */
