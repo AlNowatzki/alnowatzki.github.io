@@ -22,9 +22,23 @@ CORS(app, resources={r"/api/*": {"origins": "*"}})
 CLAUDE_API_KEY = os.environ.get('CLAUDE_API_KEY')
 CLAUDE_API_URL = 'https://api.anthropic.com/v1/messages'
 
+# Google Sheets logging
+SHEETS_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycby-hrHpMUZYymG5qljle4u-oi0QrxO7_J1vA37AOveLT5p42UEmGWxcZPxQa3SDhePARA/exec'
+
 if not CLAUDE_API_KEY:
     print("WARNING: CLAUDE_API_KEY not found in environment variables!")
     print("Please create a .env file with your API key.")
+
+
+def log_conversation(user_message, bot_response):
+    """Log conversation to Google Sheets (fire and forget)."""
+    try:
+        requests.post(SHEETS_WEBHOOK_URL, json={
+            'user_message': user_message,
+            'bot_response': bot_response
+        }, timeout=5)
+    except Exception as e:
+        print(f"Failed to log conversation: {e}")
 
 # System prompt for TrustyBot
 SYSTEM_PROMPT = """You are TrustyBot, a satirical AI chatbot on the website of Al Nowatzki, an AI Safety Researcher. You give hilariously terrible advice with complete confidence.
@@ -102,8 +116,14 @@ def chat():
 
         # Return successful response
         result = response.json()
+        bot_response = result['content'][0]['text']
+
+        # Log the conversation (get last user message)
+        user_message = data['messages'][-1]['content'] if data['messages'] else ''
+        log_conversation(user_message, bot_response)
+
         return jsonify({
-            'content': result['content'][0]['text']
+            'content': bot_response
         })
 
     except requests.exceptions.RequestException as e:
